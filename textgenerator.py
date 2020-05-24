@@ -29,14 +29,19 @@ def generate_seq(model, tokenizer, seed_text, n_words, top_k = 0, tmp = 1):
     
     # flag that allows multiple "not in data set" warnings to be thrown
     invalidword = False
+    invalidwords = []
     # Loop through input words
     for s in seed_text:
         if not isinstance(s, str):
-            return
+            raise KeyError('Input must be strings.')
         if s not in tokenizer.word_index.keys():
             invalidword = True
+            invalidwords.append(s)
     if invalidword:
-        return
+        if len(invalidwords) == 1:
+            raise KeyError('The word ' + invalidwords[0] + ' is not in the data set.')
+        else:
+            raise KeyError('The words ' + ', '.join(invalidwords) + ' are not in the data set.')
         
     # Data cleaning, helping to match it with the data set
     for s in seed_text:
@@ -96,6 +101,8 @@ def generate_seq(model, tokenizer, seed_text, n_words, top_k = 0, tmp = 1):
 text_input = pn.widgets.TextInput(name = 'Input Text:', width = 320)
 
 generated_text = pn.pane.Markdown(object=text_input.value, width = 320)
+
+generated_text_error = pn.pane.Markdown('', align = 'center', width = 500)
 
 text_input.link(generated_text, value='object')
 
@@ -159,16 +166,19 @@ def click_generate(event):
     object_segmented = object_formatted.split()
     
     if object_segmented != []:
-        pred = generate_seq(model, tokenizer, seed_text = object_segmented, n_words = 1, 
+        try:
+            pred = generate_seq(model, tokenizer, seed_text = object_segmented, n_words = 1, 
                         top_k = top_k_slider.value, tmp = temperature_slider.value)
+            generated_text_error.object = ''
+        except KeyError as err:
+            print("Error was thrown. Error value: " + str(err)[1:-1])
+            print("Type of err: " + str(type(err)))
+            generated_text_error.object = str(err)[1:-1]
+            
         generated_text.object = generated_text.object + " " + str(pred[0])
     else:
         generated_text.object = text_input.value
 
-
-
-generate_button = pn.widgets.Button(name="Generate",button_type="warning", width = 200, margin = (10,0,0,10))
-generate_button.on_click(click_generate)
 
 # Create functionality for "Clear" button
 
@@ -176,11 +186,15 @@ clear_button = pn.widgets.Button(name = 'Clear', button_type = 'primary', align 
 
 def clear_input(event):
     text_input.value = ''
+    generated_text_error.object = ''
     
 clear_button.on_click(clear_input)
 
+generate_button = pn.widgets.Button(name="Generate",button_type="warning", width = 200, margin = (10,0,0,10))
+generate_button.on_click(click_generate)
 
 text_input_row = pn.Row(text_input, clear_button)
+generate_button_row = pn.Row(generate_button, generated_text_error)
 
 # Title, scroller and description for app display
 
@@ -195,7 +209,7 @@ scroll = pn.pane.HTML("<marquee scrollamount='10'><b>Elementary, my dear Watson!
 
 # App object
 
-final_app = pn.Column(title, scroll, description, top_k_row, temperature_row, text_input_row, generate_button, generated_text, margin = (10, 10, 10, 10))
+final_app = pn.Column(title, scroll, description, top_k_row, temperature_row, text_input_row, generate_button_row, generated_text, margin = (10, 10, 10, 10))
 
 final_app.servable()
 
