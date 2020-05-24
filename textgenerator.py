@@ -99,9 +99,6 @@ generated_text = pn.pane.Markdown(object=text_input.value, width = 320)
 
 text_input.link(generated_text, value='object')
 
-text_input_row = pn.Row(text_input, clear_button)
-
-
 # Create functionality and widgets for Top K Candidates parameter
 
 def top_k_input_to_slider(target, event):
@@ -181,6 +178,9 @@ def clear_input(event):
     text_input.value = ''
     
 clear_button.on_click(clear_input)
+
+
+text_input_row = pn.Row(text_input, clear_button)
 
 # Title, scroller and description for app display
 
