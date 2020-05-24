@@ -196,5 +196,5 @@ scroll = pn.pane.HTML("<marquee scrollamount='10'><b>Elementary, my dear Watson!
 final_app = pn.Column(title, scroll, description, top_k_row, temperature_row, text_input_row, generate_button, generated_text, margin = (10, 10, 10, 10))
 
 final_app.servable()
-#final_app.show()
-final_app
+
+final_app.show()
