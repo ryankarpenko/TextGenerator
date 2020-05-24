@@ -34,7 +34,7 @@ def generate_seq(model, tokenizer, seed_text, n_words, top_k = 0, tmp = 1):
     for s in seed_text:
         if not isinstance(s, str):
             raise KeyError('Input must be strings.')
-        if s not in tokenizer.word_index.keys():
+        if s.lower() not in tokenizer.word_index.keys():
             invalidword = True
             invalidwords.append(s)
     if invalidword:
