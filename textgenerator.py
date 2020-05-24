@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # https://towardsdatascience.com/build-a-text-generator-web-app-in-under-50-lines-of-python-9b63d47edabb
 
 import panel as pn
@@ -8,7 +10,7 @@ pn.extension()
 # Load model
 
 from tensorflow.keras.models import load_model
-model = load_model('.\holmes_model_05222020.h5')
+model = load_model('./holmes_model_05222020.h5')
 
 # Load tokenizer
 
@@ -197,4 +199,4 @@ final_app = pn.Column(title, scroll, description, top_k_row, temperature_row, te
 
 final_app.servable()
 
-final_app.show()
+final_app
