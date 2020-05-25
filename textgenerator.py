@@ -199,13 +199,27 @@ generate_button_row = pn.Row(generate_button, generated_text_error)
 # Title, scroller and description for app display
 
 title = pn.pane.Markdown('# <span style="font-family:Rockwell;font-size:1.25em;">**Sherlock Holmes Text Generator**</span>', width = 600)
-description = pn.pane.Markdown("""**Top K:** The next generated word will be selected from only the K highest-probability words. Set value to 0 for all words to be considered.
+description = pn.pane.Markdown("""This neural network was given the first book of Sherlock Holmes short stories as data.
+From that text, it learned how to predict the next word in a sentence, given the words that came before it.
+In order to generate a new word, it takes a word or phrase as input from the user.
+Then it calculates the probability that each word will come next, for all the words in its vocabulary.
+Finally, it randomly selects one of the possible words based on their weighted probability.
 
-**Temperature:** Lower values mean that a stronger preference will be given to higher-probability words. A value of 0 means that only the top word candidate is used. A value of 100 uses the base probabilities given by the neural network.
+The generated results can vary greatly depending on a few important variables:
 
-""", width = 500)
+**Top K:** Setting a value of K means the next generated word will be selected from only the K highest-probability words.
+For example, if K = 5, the network will only choose from the 5 most likely words.
+Set K to 0 to consider all words without restriction.
 
-scroll = pn.pane.HTML("<marquee scrollamount='10'><b>Elementary, my dear Watson! Using the powers of deduction, this neural network will take a given sentence and predict the next word. Just adjust the parameters, type in a word or sentence, and generate as many new words as you please!</b></marquee>", width = 500)
+**Temperature:** Temperature impacts how heavily the network favors the most likely words.
+Lower temperature values will feel more reasonable, but the results will be less diverse.
+Higher temperature values will feel more random, but they might not make as much sense.
+Try to find the sweet spot that seems most realistic to you!
+
+""", width = 1000)
+
+scroll = pn.pane.HTML("<marquee scrollamount='10'><b>Elementary, my dear Watson! Using the powers of deduction, this neural network will take a given sentence and predict the next word. Just adjust the parameters, type in a word or sentence, and generate as many new words as you please!</b></marquee>",
+                   width = 1000)
 
 # App object
 
