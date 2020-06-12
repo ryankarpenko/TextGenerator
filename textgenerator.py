@@ -16,7 +16,9 @@ model = load_model('./largermodel-input.h5')
 # Load tokenizer
 
 import pickle
-with open('tokenizer.pickle', 'rb') as handle:
+#with open('tokenizer.pickle', 'rb') as handle:
+#    tokenizer = pickle.load(handle)
+with open('tokenizer_large.pickle', 'rb') as handle:
     tokenizer = pickle.load(handle)
 
 # Function to generate next word
