@@ -10,7 +10,8 @@ pn.extension()
 # Load model
 
 from tensorflow.keras.models import load_model
-model = load_model('./holmes_model_05222020.h5')
+#model = load_model('./holmes_model_05222020.h5')
+model = load_model('./largermodel.h5')
 
 # Load tokenizer
 
