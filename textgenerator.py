@@ -10,16 +10,19 @@ pn.extension()
 # Load model
 
 from tensorflow.keras.models import load_model
-#model = load_model('./holmes_model_05222020.h5')
-model = load_model('./largermodel-input.h5')
+model = load_model('./holmes_model_05222020.h5')
+# larger model has more words,
+#  but that makes it more likely to give an
+#  illogical result. So there's a tradeoff
+#model = load_model('./largermodel-input.h5')
 
 # Load tokenizer
 
 import pickle
-#with open('tokenizer.pickle', 'rb') as handle:
-#    tokenizer = pickle.load(handle)
-with open('tokenizer_large.pickle', 'rb') as handle:
+with open('tokenizer.pickle', 'rb') as handle:
     tokenizer = pickle.load(handle)
+#with open('tokenizer_large.pickle', 'rb') as handle:
+#    tokenizer = pickle.load(handle)
 
 # Function to generate next word
 
