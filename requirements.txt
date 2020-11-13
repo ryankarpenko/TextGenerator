@@ -2,4 +2,4 @@ gunicorn==20.0.4
 jupyter==1.0.0
 panel==0.9.5
 numpy==1.17.4
-tensorflow==1.15.2
+tensorflow==2.3.1
